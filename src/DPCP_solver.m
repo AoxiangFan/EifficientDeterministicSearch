@@ -1,5 +1,6 @@
 function [B, distances] = DPCP_solver(Xtilde,c,mu_min,maxiter)
 
+% This code slightly changed from release of NeuRIPS2018 paper "Dual principal component pursuit: Improved analysis and efficient algorithms".
 if nargin < 3
     mu_min = 1e-15; maxiter = 200;
 end
