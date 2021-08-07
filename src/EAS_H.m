@@ -1,4 +1,5 @@
-function [H, inliers] = EAS_H(D,X,Y,size1,size2)
+function [H, inliers] = EAS_H(X,Y,size1,size2)
+D = GenerateEmbeddings(X, Y, 'A');
 [~,d] = DPCP_solver(D, 2);
 idx = find(d<=0.15);
 
