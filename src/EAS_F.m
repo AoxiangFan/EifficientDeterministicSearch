@@ -12,5 +12,5 @@ th = (norm(size1) + norm(size2))*0.0016/2;
 % Set option = 'LO' to activate local optimization, option = 'DEGEN' to
 % activate degeneracy check, option = 'BOTH' to activate both. Note that
 % the degeneracy check part is a rough implementation and unstable, we are trying
-% to improve it now. Set option  = 'None' to use plain RANSAC.
+% to improve it now. Set option  = 'None' to use plain random sample.
 [F, inliers] = Post_FundamentalMatrix(X, Y, idx, 500, th, 'LO');
