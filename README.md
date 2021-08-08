@@ -6,7 +6,7 @@ This repo is now a rough version which only implements SRE-A in the paper, and w
 
 The method is renamed as EAS which is used in our journal version. 
 
-If you find this code useful for your research, plese cite our paper:
+If you find this code useful for your research, please cite our paper:
 
 ```
 @inproceedings{fan2020geometric,
