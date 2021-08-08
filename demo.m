@@ -4,7 +4,7 @@ close all
 %% example for fundamental matrix estimation
 
 % A normal example
-load ./data/booksh.mat
+load ./data/wash.mat
 
 % A degeneracy example
 % load ./data/box.mat 
@@ -19,7 +19,7 @@ showMatchedFeatures(I1, I2, X0(inliers,:), Y0(inliers,:), 'montage');
 
 %% example for homography estimation
 
-load ./data/adam.mat
+load ./data/graf.mat
 size1 = [size(I1,1), size(I1,2)];
 size2 = [size(I2,1), size(I2,2)];
 
