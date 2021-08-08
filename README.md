@@ -8,6 +8,17 @@ The method is renamed as EAS which is used in our journal version.
 
 If you find this code useful for your research, plese cite our paper "Geometric Estimation via Robust Subspace Recovery".
 
+```
+@inproceedings{fan2020geometric,
+  title={Geometric Estimation via Robust Subspace Recovery},
+  author={Fan, Aoxiang and Jiang, Xingyu and Wang, Yang and Jiang, Junjun and Ma, Jiayi},
+  booktitle={Computer Vision--ECCV 2020: 16th European Conference, Glasgow, UK, August 23--28, 2020, Proceedings, Part XXII 16},
+  pages={462--478},
+  year={2020},
+  organization={Springer}
+}
+```
+
 # usage
 
 To use the code, run initialization.m first and run demo.m for simple examples.
