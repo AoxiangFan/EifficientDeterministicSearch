@@ -6,6 +6,7 @@ Functions for Geometric Model Fitting".
 This repo is now a rough version which only implements MATLAB code. A python implementation is coming soon. 
 
 EES_MATLAB contains the code of the proposed Efficient Exact Search method for homography, fundamental matrix and linear estimation.
+
 EAS_MATLAB contains the code of the proposed Efficient Approximate Search method for homography and fundamental matrix estimation. The EAS method is recommended for geometric estimation task which has better performance in our evaluation.
 
 If you find this code useful for your research, please cite our paper:
