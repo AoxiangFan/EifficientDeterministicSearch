@@ -6,6 +6,7 @@ close all
 % A normal example
 load ./data/wash.mat
 
+
 % A degeneracy example
 % load ./data/box.mat 
 
@@ -20,6 +21,7 @@ showMatchedFeatures(I1, I2, X0(inliers,:), Y0(inliers,:), 'montage');
 %% example for homography estimation
 
 load ./data/graf.mat
+
 size1 = [size(I1,1), size(I1,2)];
 size2 = [size(I2,1), size(I2,2)];
 
