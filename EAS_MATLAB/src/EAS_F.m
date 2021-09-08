@@ -1,4 +1,15 @@
 function [F, inliers] = EAS_F(X, Y, embeddingType, size1, size2)
+
+% remove one-to-many correspondences, which can greatly affect the
+% estimation process
+label = zeros(size(X,1),1);
+[~, u1] = unique(Y,'rows');
+X = X(u1,:);
+Y = Y(u1,:);
+[~, u2] = unique(X,'rows');
+X = X(u2,:);
+Y = Y(u2,:);
+
 N = size(X,1);
 switch embeddingType
     case 'A'
@@ -29,9 +40,14 @@ switch embeddingType
         idx = find(d<=0.15);
 end
 
+% adaptive inlier-outlier threshold in pixel, but also tunable (0 to 5 pixel in general)
 th = (norm(size1) + norm(size2))*0.0016/2;
+
 % Set option = 'LO' to activate local optimization, option = 'DEGEN' to
 % activate degeneracy check, option = 'BOTH' to activate both. Note that
 % the degeneracy check part is a rough implementation and unstable, we are trying
 % to improve it now. Set option  = 'None' to use plain random sample.
 [F, inliers] = Post_FundamentalMatrix(X, Y, idx, 500, th, 'LO');
+
+label(u1(u2(inliers))) = 1;
+inliers = find(label==1);
