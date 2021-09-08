@@ -3,7 +3,11 @@
 Implementation of ECCV 2020 paper "Geometric Estimation via Robust Subspace Recovery" and IEEE TPAMI 2021 paper "Efficient Deterministic Search with Robust Loss
 Functions for Geometric Model Fitting". 
 
-This repo is now a rough version which only implements EAS-A of the IEEE TPAMI 2021 paper (i.e. SRE-A in the ECCV 2020 paper) and will be improved soon with other proposed methods and a python implementation.  
+This repo is now a rough version which only implements MATLAB code. A python implementation is coming soon. 
+
+EES_MATLAB contains the code of the proposed Efficient Exact Search method for homography, fundamental matrix and linear estimation.
+
+EAS_MATLAB contains the code of the proposed Efficient Approximate Search method for homography and fundamental matrix estimation. The EAS method is recommended for geometric estimation task which has better performance in our evaluation.
 
 If you find this code useful for your research, please cite our paper:
 
@@ -30,6 +34,6 @@ and
 
 # usage
 
-To use the code, run initialization.m first and run demo.m for simple examples.
+To use the code, run initialization.m first and run demo for simple examples.
 
 
