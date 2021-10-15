@@ -1,11 +1,10 @@
-function d = SampsonDistanceH(X1,X2,H)
+function d = SampsonDistanceH_all(X1,X2,H)
 
+global Dx;
+global Dy;
 N = size(X1,2);
-Dx = [X1'.* repmat(X2(3,:)',1,3), zeros(N,3), -X1'.* repmat(X2(1,:)',1,3)];
-Dy = [zeros(N,3), X1'.* repmat(X2(3,:)',1,3) , -X1'.* repmat(X2(2,:)',1,3)];
 h = reshape(H',9,1);
 alg = [Dx * h , Dy * h]';
-
 p1 = X1 ./ repmat(X1(3,:),3,1);
 p2 = X2 ./ repmat(X2(3,:),3,1);
 G1 = [ H(1,1) - p2(1,:) * H(3,1) ; ...

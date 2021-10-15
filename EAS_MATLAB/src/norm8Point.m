@@ -4,8 +4,10 @@ num = size(X, 2);
 
 [X, T1] = normalise2dpts(X);
 [Y, T2] = normalise2dpts(Y);
-X(isnan(X)) = 1;
-Y(isnan(Y)) = 1;
+if any(any(isnan(X))) || any(any(isnan(Y)))
+    f = rand(3,3);
+    return
+end
 
 % Compute the constraint matrix
 m = zeros(num, 9);

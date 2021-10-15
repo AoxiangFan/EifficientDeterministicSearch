@@ -1,15 +1,19 @@
-function Fm = norm7Point(pts1h, pts2h)
+function Fm = norm7Point(X, Y)
 
-num = size(pts1h, 2);
-[pts1h, T1] = normalise2dpts(pts1h);
-[pts2h, T2] = normalise2dpts(pts2h);
+num = size(X, 2);
+[X, T1] = normalise2dpts(X);
+[Y, T2] = normalise2dpts(Y);
+if any(any(isnan(X))) || any(any(isnan(Y)))
+    Fm = rand(3,3);
+    return
+end
 
 m = zeros(num, 9);
 for idx = 1: num
   m(idx,:) = [...
-    pts1h(1,idx)*pts2h(1,idx), pts1h(2,idx)*pts2h(1,idx), pts2h(1,idx), ...
-    pts1h(1,idx)*pts2h(2,idx), pts1h(2,idx)*pts2h(2,idx), pts2h(2,idx), ...
-                 pts1h(1,idx),              pts1h(2,idx), 1];
+    X(1,idx)*Y(1,idx), X(2,idx)*Y(1,idx), Y(1,idx), ...
+    X(1,idx)*Y(2,idx), X(2,idx)*Y(2,idx), Y(2,idx), ...
+                 X(1,idx),              X(2,idx), 1];
 end
 % m(:,1:3) = (repmat(pts2h(1,:), 3, 1).*pts1h)';
 % m(:,4:6) = (repmat(pts2h(2,:), 3, 1).*pts1h)';

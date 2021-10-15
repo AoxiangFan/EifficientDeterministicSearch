@@ -1,4 +1,4 @@
-function [F, bestInliers] = Post_FundamentalMatrix(X, Y, idx, maxTrials, threshold, option)
+function [F, bestInliers] = Post_FundamentalMatrix(X, Y, maxTrials, threshold, LO, DEGEN)
 
 N = size(X,1);
 X = [X, ones(N,1)]';
@@ -8,18 +8,25 @@ curTrials = 0;
 bestInliers = [];
 numBestInliers = 0;
 
+numGoodInliers = 0;
+
+global Dx;
+global Dy;
+[Dx, Dy] = preSampsonDistanceH_all(X, Y);
+
 while curTrials <= maxTrials
-    [F, curInliers, indices] = MinimalSample2_F(X, Y, idx, threshold);
+    [F, indices, curInliers] = MinimalSample_F(X, Y, N, threshold);
     numCurInliers = length(curInliers);
-        
-    if numBestInliers < numCurInliers
-        bestInliers = curInliers;
-        numBestInliers = numCurInliers;
-        if strcmp(option,'DEGEN') || strcmp(option,'BOTH')
-        % degenaracy check
-            [H, degeneracy] = DegeneracyCheck(X, Y, indices, threshold);
-            if degeneracy
-                [curInliers, F] = DegeneracyUpdate(X, Y, threshold, bestInliers, H);
+    if numGoodInliers < numCurInliers
+        numGoodInliers = numCurInliers;
+        maxTrials = updateMaxTrials(numGoodInliers, maxTrials, N, 0.999999, 7);
+        if numBestInliers < numCurInliers
+            bestInliers = curInliers;
+            numBestInliers = numCurInliers;
+        end
+        if LO
+            if numCurInliers >= 16
+                [F, curInliers] = LO_F(X, Y, F, threshold, 3, 50);
                 numCurInliers = length(curInliers);
                 if numBestInliers < numCurInliers
                     bestInliers = curInliers;
@@ -27,22 +34,31 @@ while curTrials <= maxTrials
                 end
             end
         end
-        if strcmp(option,'LO') || strcmp(option,'BOTH')
-        % local optimization
-            if numBestInliers >= 8
-                [curInliers, F] = LocalOptimizationF(bestInliers, X, Y, threshold);
-                numCurInliers = length(curInliers);
-                if numBestInliers < numCurInliers
-                    bestInliers = curInliers;
-                    numBestInliers = numCurInliers;
+        if DEGEN
+            [flag, H] = checkSample(X(:, indices), Y(:, indices), F, 2*threshold);
+            if flag
+                dH = SampsonDistanceH_all(X, Y, H);
+                inliersH = find(dH <= 3*threshold);
+                if length(inliersH) >= 8
+                    [H, inliersH] = LO_H(X, Y, H, threshold, 3, 50);
+                    if length(inliersH) >= 6
+                        [F, inliersF] = H2F(X, Y, H, threshold);
+                        if numBestInliers < length(inliersF)
+                            bestInliers = inliersF;
+                            numBestInliers = length(inliersF);
+                        end
+                    end
                 end
             end
         end
-        % Update the number of trials
     end
     curTrials = curTrials + 1;
 end
-F = norm8Point(X(:, bestInliers), Y(:, bestInliers));
-d = SampsonDistanceF(X, Y, F);
-bestInliers = find(d<=threshold);
+if length(bestInliers) >= 8    
+    F = norm8Point(X(:, bestInliers), Y(:, bestInliers));
+    d = SampsonDistanceF(X, Y, F);
+    bestInliers = find(d<=threshold);
+else
+    F = ones(3,3);
+end
 end

@@ -1,14 +1,15 @@
 clear,clc
 close all
 
+warning off
 %% example for fundamental matrix estimation
 
-% A normal example
-load ./data/wash.mat
+% % A normal example
+% load ./data/wash.mat
 
 
 % A degeneracy example
-% load ./data/box.mat 
+load ./data/box.mat 
 
 size1 = [size(I1,1), size(I1,2)];
 size2 = [size(I2,1), size(I2,2)];

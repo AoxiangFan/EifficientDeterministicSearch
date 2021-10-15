@@ -30,8 +30,10 @@ end
 % adaptive inlier-outlier threshold in pixel, but also tunable (0 to 5 pixel in general)
 th = (norm(size1) + norm(size2))*0.0016/2;
 
-% Set option = 'LO' to activate local optimization, set option = 'None' to
-% use plain random sample.
-[H, inliers] = Post_Homography(X, Y, idx, 500, th, 'LO');
-label(u1(u2(inliers))) = 1;
+% option: local optimization (LO)
+LO = true;
+[H, ~] = Post_Homography(X(idx,:), Y(idx,:), 500, th, LO);
+d = SampsonDistanceH([X, ones(N,1)]', [Y, ones(N,1)]', H);
+
+label(u1(u2(d<=th))) = 1;
 inliers = find(label==1);

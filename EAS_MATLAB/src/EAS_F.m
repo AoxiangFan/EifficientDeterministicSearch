@@ -43,11 +43,11 @@ end
 % adaptive inlier-outlier threshold in pixel, but also tunable (0 to 5 pixel in general)
 th = (norm(size1) + norm(size2))*0.0016/2;
 
-% Set option = 'LO' to activate local optimization, option = 'DEGEN' to
-% activate degeneracy check, option = 'BOTH' to activate both. Note that
-% the degeneracy check part is a rough implementation and unstable, we are trying
-% to improve it now. Set option  = 'None' to use plain random sample.
-[F, inliers] = Post_FundamentalMatrix(X, Y, idx, 500, th, 'LO');
+% option: local optimization (LO), degenaracy updating (DEGEN)
+LO = true;
+DEGEN = true;
+[F, ~] = Post_FundamentalMatrix(X(idx,:), Y(idx,:), 500, th, LO, DEGEN);
+d = SampsonDistanceF([X, ones(N,1)]', [Y, ones(N,1)]', F);
 
-label(u1(u2(inliers))) = 1;
+label(u1(u2(d<=th))) = 1;
 inliers = find(label==1);
